@@ -1,0 +1,27 @@
+name: WhoIsNear
+main: com.github.Gamecube762.WhoIsNear.Main
+author: Gamecube762
+version: 0.1
+prefix: WhoIsNear
+commands:
+   WhoIsNear:
+      description: WhoIsNear command
+      usage: /<command>
+      permission: WhoIsNear.command
+      permission-message: You don't have to use this!
+permissions:
+   WhoIsNear.command:
+      description: /WhoIsNear command
+      default: true
+   WhoIsNear.hidden:
+      description: Hides player from being found in command
+      default: false
+   WhoIsNear.hidden.bypass:
+      description: Bypasses hidden players
+      default: false
+   WhoIsNear.found.warn:
+      description: Warns the player when he is found
+      default: false
+   WhoIsNear.found.tell:
+      description: Tells the player when he is found
+      default: false
