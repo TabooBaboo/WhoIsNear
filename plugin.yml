@@ -1,7 +1,7 @@
 name: WhoIsNear
 main: com.github.Gamecube762.WhoIsNear.Main
 author: Gamecube762
-version: 0.1
+version: 0.2
 prefix: WhoIsNear
 commands:
    WhoIsNear:
@@ -12,7 +12,7 @@ commands:
 permissions:
    WhoIsNear.command:
       description: /WhoIsNear command
-      default: true
+      default: false
    WhoIsNear.hidden:
       description: Hides player from being found in command
       default: false
