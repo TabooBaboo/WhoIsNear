@@ -1,4 +1,4 @@
-package com.github.Gamecube762.WhoIsNear;
+package com.github.Requi.FPNear;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,10 +26,13 @@ public class Main extends JavaPlugin{
 	int defaultRange;
 	HashMap<String, Integer> groupRanges = new HashMap<String, Integer>();
 	{//presets
-		groupRanges.put("Helper", 100);
-		groupRanges.put("VIP", 300);
-		groupRanges.put("Moderator", 500);
-		groupRanges.put("Admin", 1000);
+	        groupRanges.put("Warrior", 100);
+	        groupRanges.put("Knight", 125);
+	        groupRanges.put("Legend", 150);
+		groupRanges.put("Spartan", 175);
+		groupRanges.put("Immortal", 300);
+		groupRanges.put("God", 500);
+		groupRanges.put("Zeus", 600);
 	}
 	
 	
@@ -53,7 +56,7 @@ public class Main extends JavaPlugin{
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-    	if ( !(sender instanceof Player) ) {sender.sendMessage("Needs to be a player sendong the command!"); return true;}
+    	if ( !(sender instanceof Player) ) {sender.sendMessage("Needs to be a player sending the command!"); return true;}
     	
     	Player p = (Player) sender;
     	List<Player> players = new ArrayList<Player>(); 
@@ -65,16 +68,16 @@ public class Main extends JavaPlugin{
     	
     	sender.sendMessage("Players within " + defaultRange + "blocks of you:");
     	for (Player a : players) {
-    		boolean hidden = a.hasPermission("WhoIsNear.hidden"),
-    				bypass = p.hasPermission("WhoIsNear.hidden.bypass");
+    		boolean hidden = a.hasPermission("FPNear.hidden"),
+    				bypass = p.hasPermission("FPNear.hidden.bypass");
     		
     		
     		if (!hidden | bypass) {
     			int i = (int) a.getLocation().distance( p.getLocation() );
     			sender.sendMessage(ChatColor.YELLOW + a.getDisplayName() + ChatColor.BLUE +" (" + ChatColor.RESET + i + ChatColor.BLUE + ")" );
     			
-    			if (a.hasPermission("WhoIsNear.found.warn") ) a.playSound(a.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
-    			if (a.hasPermission("WhoIsNear.found.tell") ) a.sendMessage("Someone Found you with a radar!");
+    			if (a.hasPermission("FPNear.found.warn") ) a.playSound(a.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+    			if (a.hasPermission("FPNear.found.tell") ) a.sendMessage("FPNear: Someone Found you with a radar!");
     				
     		}
     	}
@@ -84,14 +87,14 @@ public class Main extends JavaPlugin{
     
     public int getRange(Player p){
     	for (String s : groupRanges.keySet())
-    		if ( p.hasPermission("WhoIsNear.group." + s) )
+    		if ( p.hasPermission("FPNear.group." + s) )
     			return groupRanges.get(s);
     	
     	return defaultRange;
     }
 
     private void updateConfig() {
-    	config.options().header("WhoIsNear config.yml | Plugin by Gamecube762\n"+
+    	config.options().header("FPNear config.yml | Plugin by Requi\n"+
     			"DO NOT use TAB when editing this file, use SPACES instead, otherwise the plugin will hate you...\n" +
     			"Settings.DefaultRange: 500 is the default range for the radar\n" +
     			"Settings.GroupRanges: <GroupName : Range> is the ranges for the groups\n" +
@@ -100,7 +103,7 @@ public class Main extends JavaPlugin{
     			);
     	
     	if (config.contains("Settings.Range")) {config.set("Settings.Range", null);}
-    	if (!config.contains("Settings.DefaultRange")) config.set("Settings.DefaultRange", 500);
+    	if (!config.contains("Settings.DefaultRange")) config.set("Settings.DefaultRange", 100);
     	if (!config.contains("Settings.GroupRanges")) config.createSection("Settings.GroupRanges", groupRanges);
     	
     	
@@ -127,7 +130,7 @@ public class Main extends JavaPlugin{
     private void addgroup(String s, int i){
     	groupRanges.put(s, i);
     	
-    	Permission groupPerm = new Permission("WhoIsNear.group." + s, PermissionDefault.FALSE);
+    	Permission groupPerm = new Permission("FPNear.group." + s, PermissionDefault.FALSE);
     	getServer().getPluginManager().addPermission(groupPerm);//adds permission node defaulting to false so we can correctly check groups later
     }
 }
